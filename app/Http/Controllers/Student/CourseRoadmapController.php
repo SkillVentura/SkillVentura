@@ -66,12 +66,18 @@ class CourseRoadmapController extends Controller
 
             $firstModule = $modules->first();
 
+            /** @var FilesystemAdapter $disk */
+            $disk = Storage::disk('s3');
+            $pathThumbnail = $path->thumbnail
+                ? (str_starts_with($path->thumbnail, 'http') ? $path->thumbnail : $disk->url($path->thumbnail))
+                : null;
+
             return [
                 '_id' => $pathId,
                 'name' => $path->name,
                 'slug' => $path->slug,
                 'description' => $path->description,
-                'thumbnail' => $path->thumbnail,
+                'thumbnail' => $pathThumbnail,
                 'is_unlocked' => $isUnlocked,
                 'is_completed' => $isCompleted,
 
@@ -149,7 +155,7 @@ class CourseRoadmapController extends Controller
                     'paths' => $group->paths
                         ->sortBy('order')
                         ->values()
-                        ->map(function ($path, $index) use ($progress, $isBasicCompleted) {
+                        ->map(function ($path, $index) use ($progress, $isBasicCompleted, $disk) {
 
                             $pathId = (string) $path->_id;
 
@@ -170,12 +176,16 @@ class CourseRoadmapController extends Controller
                                 $isUnlocked = true;
                             }
 
+                            $careerPathThumbnail = $path->thumbnail
+                                ? (str_starts_with($path->thumbnail, 'http') ? $path->thumbnail : $disk->url($path->thumbnail))
+                                : null;
+
                             return [
                                 '_id' => $pathId,
                                 'name' => $path->name,
                                 'slug' => $path->slug,
                                 'description' => $path->description,
-                                'thumbnail' => $path->thumbnail,
+                                'thumbnail' => $careerPathThumbnail,
                                 'is_unlocked' => $isUnlocked,
                                 'is_selected' => $isSelected,
                                 'is_completed' => $isCompleted,

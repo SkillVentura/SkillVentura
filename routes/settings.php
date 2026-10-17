@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Settings\DonationBannerController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\SignatureController;
@@ -18,6 +19,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('signature', [SignatureController::class, 'edit'])->name('profile.signature.edit');
         Route::post('signature', [SignatureController::class, 'update'])->name('profile.signature.update');
         Route::delete('signature', [SignatureController::class, 'destroy'])->name('profile.signature.destroy');
+
+        Route::get('donation-banner', [DonationBannerController::class, 'edit'])->name('donation-banner.edit');
+        Route::post('donation-banner', [DonationBannerController::class, 'update'])->name('donation-banner.update');
+        Route::delete('donation-banner', [DonationBannerController::class, 'destroy'])->name('donation-banner.destroy');
     });
 });
 

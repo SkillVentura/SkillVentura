@@ -39,13 +39,16 @@ interface Submission {
     description: string;
     submission_type: 'file' | 'link';
     attachment?: string;
+    attachment_url?: string;
     group?: CareerGroup;
 }
 
 interface StudentSubmission {
     id: string;
     _id?: string;
+    slug?: string;
     file_path?: string;
+    file_url?: string;
     link?: string;
     notes?: string;
     status: string;
@@ -269,7 +272,10 @@ export default function Show({ submission, studentSubmission }: Props) {
                         {submission.attachment && (
                             <div className="pt-2">
                                 <a
-                                    href={`/storage/${submission.attachment}`}
+                                    href={
+                                        submission.attachment_url ||
+                                        `/submissions/${submission.slug || submission.id || submission._id}/attachment`
+                                    }
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center gap-2 rounded-xl border border-blue-300 bg-white px-4 py-2.5 text-xs font-bold text-blue-700 shadow-xs transition-all hover:bg-blue-50 hover:shadow-md dark:border-blue-500/40 dark:bg-[#0c1229] dark:text-blue-300 dark:hover:bg-blue-900/50"
@@ -345,7 +351,10 @@ export default function Show({ submission, studentSubmission }: Props) {
                                                 </div>
                                             </div>
                                             <a
-                                                href={`/storage/${studentSubmission.file_path}`}
+                                                href={
+                                                    studentSubmission.file_url ||
+                                                    `/student-submissions/${studentSubmission.slug || studentSubmission.id || studentSubmission._id}/file`
+                                                }
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="inline-flex items-center gap-1.5 rounded-xl border border-blue-300 bg-blue-50 px-3.5 py-2 text-xs font-bold text-blue-700 shadow-xs transition-colors hover:bg-blue-100 dark:border-blue-500/40 dark:bg-blue-500/20 dark:text-blue-300 dark:hover:bg-blue-500/30"

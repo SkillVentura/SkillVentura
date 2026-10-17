@@ -5,6 +5,7 @@ import {
     Pencil,
     Trash2,
     User as UserIcon,
+    MoreVertical,
 } from 'lucide-react';
 import { Message } from './types';
 
@@ -293,25 +294,45 @@ export default function MessageBubble({
                         Object.keys(reactionsGrouped).length > 0 ? 'pb-5.5' : ''
                     }`}
                 >
-                    {/* Top Right Badges Container */}
-                    <div className="pointer-events-none absolute top-1 right-1 z-10 flex items-center gap-1 select-none">
+                    {/* Top Right Badges & Action Trigger Container */}
+                    <div className="absolute top-1.5 right-1 z-10 flex items-center gap-1 select-none">
                         {msg.is_pinned && (
-                            <Pin className="h-3 w-3 rotate-45 text-[#facc15] dark:text-[#facc15]" />
+                            <Pin className="pointer-events-none h-3 w-3 rotate-45 text-[#facc15] dark:text-[#facc15]" />
                         )}
                         {!isSelf &&
                             !isConsecutive &&
                             msg.sender.role === 'admin' && (
-                                <span className="rounded-xs border border-rose-500/30 bg-rose-500/20 px-1 py-[1px] text-[8px] leading-none font-bold tracking-wider text-rose-500 uppercase dark:text-rose-400">
+                                <span className="pointer-events-none rounded-xs border border-rose-500/30 bg-rose-500/20 px-1 py-[1px] text-[8px] leading-none font-bold tracking-wider text-rose-500 uppercase dark:text-rose-400">
                                     Admin
                                 </span>
                             )}
                         {!isSelf &&
                             !isConsecutive &&
                             msg.sender.role === 'mentor' && (
-                                <span className="rounded-xs border border-emerald-500/30 bg-emerald-500/20 px-1 py-[1px] text-[8px] leading-none font-bold tracking-wider text-emerald-600 uppercase dark:text-emerald-400">
+                                <span className="pointer-events-none rounded-xs border border-emerald-500/30 bg-emerald-500/20 px-1 py-[1px] text-[8px] leading-none font-bold tracking-wider text-emerald-600 uppercase dark:text-emerald-400">
                                     Mentor
                                 </span>
                             )}
+                        <button
+                            type="button"
+                            aria-label="Opsi pesan"
+                            title="Opsi pesan"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveMenuMessageId(
+                                    activeMenuMessageId === msg.id
+                                        ? null
+                                        : msg.id,
+                                );
+                            }}
+                            className={`flex h-4 w-4 cursor-pointer items-center justify-center rounded-full transition-colors ${
+                                activeMenuMessageId === msg.id
+                                    ? 'bg-slate-900/10 text-slate-800 dark:bg-white/15 dark:text-white'
+                                    : 'text-slate-400 hover:bg-slate-900/5 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-slate-200'
+                            }`}
+                        >
+                            <MoreVertical className="h-3.5 w-3.5" />
+                        </button>
                     </div>
 
                     {/* Arrow Ekor Balon Chat */}
@@ -352,7 +373,18 @@ export default function MessageBubble({
 
                     {/* Nama & Peran Pengirim */}
                     {!isSelf && !isConsecutive && (
-                        <div className="mb-1 flex items-center pr-2">
+                        <div
+                            className={`mb-1 flex items-center ${
+                                msg.sender.role === 'admin' ||
+                                msg.sender.role === 'mentor'
+                                    ? msg.is_pinned
+                                        ? 'pr-20'
+                                        : 'pr-16'
+                                    : msg.is_pinned
+                                      ? 'pr-9'
+                                      : 'pr-5'
+                            }`}
+                        >
                             <span
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -376,16 +408,23 @@ export default function MessageBubble({
                                 ? getNameColor(parentSenderId)
                                 : '#3B28F6';
                             const isFullBorder = isSelf;
+                            const needsTopRightSpace = isSelf || isConsecutive;
                             return (
                                 <div
                                     onClick={(e) => {
                                         e.stopPropagation(); // Mencegah menu terbuka jika mengklik kutipan
                                         scrollToMessage(msg.parent!.id);
                                     }}
-                                    className={`mb-2.5 w-full max-w-full cursor-pointer bg-slate-100/90 text-left transition hover:bg-slate-200/90 dark:bg-slate-900 dark:hover:bg-slate-950 ${
+                                    className={`mb-2.5 max-w-full cursor-pointer bg-slate-100/90 text-left transition hover:bg-slate-200/90 dark:bg-slate-900 dark:hover:bg-slate-950 ${
+                                        needsTopRightSpace
+                                            ? msg.is_pinned
+                                                ? 'mr-8'
+                                                : 'mr-4'
+                                            : 'w-full'
+                                    } ${
                                         isFullBorder
                                             ? 'rounded border border-indigo-200 px-3 py-1.5 dark:border-[#3B28F6]'
-                                            : 'rounded-xs border border-indigo-200 py-1 pl-3 dark:border-[#3B28F6]'
+                                            : 'rounded-xs border border-indigo-200 py-1 pr-2 pl-3 dark:border-[#3B28F6]'
                                     }`}
                                 >
                                     <p
@@ -403,7 +442,15 @@ export default function MessageBubble({
 
                     {/* Gambar Lampiran */}
                     {msg.attachments && msg.attachments.length > 0 && (
-                        <div className="mb-2 max-w-full overflow-hidden rounded-lg border border-slate-200 bg-black/5 dark:border-[#3B28F6]/20 dark:bg-black/40">
+                        <div
+                            className={`mb-2 max-w-full overflow-hidden rounded-lg border border-slate-200 bg-black/5 dark:border-[#3B28F6]/20 dark:bg-black/40 ${
+                                (isSelf || isConsecutive) && !msg.parent
+                                    ? msg.is_pinned
+                                        ? 'mr-8'
+                                        : 'mr-4'
+                                    : ''
+                            }`}
+                        >
                             {msg.attachments.map((url, i) => (
                                 <img
                                     key={i}
@@ -426,6 +473,15 @@ export default function MessageBubble({
                                 isMentorOrAdmin
                                     ? 'md:text-[13px] lg:text-[13px] xl:text-[13px]'
                                     : 'md:text-sm'
+                            } ${
+                                (isSelf || isConsecutive) &&
+                                !msg.parent &&
+                                (!msg.attachments ||
+                                    msg.attachments.length === 0)
+                                    ? msg.is_pinned
+                                        ? 'pr-8'
+                                        : 'pr-4'
+                                    : ''
                             }`}
                         >
                             {msg.message}

@@ -33,7 +33,11 @@ export default function FundamentalNode({
                     <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border-2 border-blue-500 bg-blue-900/40">
                         {thumbnail ? (
                             <img
-                                src={`/storage/${thumbnail}`}
+                                src={
+                                    thumbnail.startsWith('http') || thumbnail.startsWith('/')
+                                        ? thumbnail
+                                        : `/storage/${thumbnail}`
+                                }
                                 className="h-full w-full object-cover"
                                 alt="thumbnail"
                             />

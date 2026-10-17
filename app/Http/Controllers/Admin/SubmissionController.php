@@ -59,6 +59,7 @@ class SubmissionController extends Controller
                 'grade' => $sub->grade,
                 'feedback' => $sub->feedback,
                 'file_path' => $sub->file_path,
+                'file_url' => $sub->file_url,
                 'link' => $sub->link,
                 'notes' => $sub->notes,
                 'certificate_path' => $sub->certificate_path,

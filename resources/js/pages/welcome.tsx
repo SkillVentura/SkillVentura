@@ -12,7 +12,19 @@ import CtaSection from '@/components/Welcome/CtaSection';
 import ContactSection from '@/components/Welcome/ContactSection';
 import Footer from '@/components/Welcome/Footer';
 
-export default function Welcome({ auth }: { auth: { user: any } }) {
+export interface PublicDonationBanner {
+    title?: string | null;
+    url: string;
+    image_url: string | null;
+}
+
+export default function Welcome({
+    auth,
+    donationBanner = null,
+}: {
+    auth: { user: any };
+    donationBanner?: PublicDonationBanner | null;
+}) {
     const { url } = usePage();
     const { resolvedAppearance, updateAppearance } = useAppearance();
 
@@ -36,7 +48,10 @@ export default function Welcome({ auth }: { auth: { user: any } }) {
                     darkMode={darkMode}
                     toggleTheme={toggleTheme}
                 />
-                <HeroSection />
+                <HeroSection
+                    donationBanner={donationBanner}
+                    auth={auth}
+                />
                 <AboutSection />
                 <VisionMissionSection />
                 <GamifiedMapSection />

@@ -1,3 +1,5 @@
+import { Link } from '@inertiajs/react';
+
 export default function Footer() {
     return (
         <footer className="relative pt-12 pb-10 sm:pt-14 md:pt-16">
@@ -69,12 +71,47 @@ export default function Footer() {
                         Program
                     </h4>
 
-                    <ul className="space-y-2 text-sm text-gray-600 sm:flex sm:flex-wrap sm:justify-center sm:space-y-0 sm:gap-x-6 sm:gap-y-2 md:justify-start dark:text-gray-400">
-                        <li>Online course</li>
-                        <li>Bootcamp</li>
-                        <li>Learn gaming</li>
-                        <li>Corporate training</li>
-                        <li>Partnership</li>
+                    <ul className="space-y-2 text-sm text-gray-600 sm:flex sm:flex-wrap sm:justify-center sm:space-y-0 sm:gap-x-6 sm:gap-y-2 md:flex-col md:justify-start md:space-y-2 dark:text-gray-400">
+                        <li>
+                            <Link
+                                href="/online-course"
+                                className="transition-colors hover:text-blue-600 dark:hover:text-yellow-400"
+                            >
+                                Online course
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/bootcamp"
+                                className="transition-colors hover:text-blue-600 dark:hover:text-yellow-400"
+                            >
+                                Bootcamp
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/learn-gaming"
+                                className="transition-colors hover:text-blue-600 dark:hover:text-yellow-400"
+                            >
+                                Learn gaming
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/corporate-training"
+                                className="transition-colors hover:text-blue-600 dark:hover:text-yellow-400"
+                            >
+                                Corporate training
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/partnership"
+                                className="transition-colors hover:text-blue-600 dark:hover:text-yellow-400"
+                            >
+                                Partnership
+                            </Link>
+                        </li>
                     </ul>
                 </div>
 
@@ -87,10 +124,38 @@ export default function Footer() {
                         </h4>
 
                         <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                            <li>About us</li>
-                            <li>Blog</li>
-                            <li>Learn</li>
-                            <li>Komunitas</li>
+                            <li>
+                                <Link
+                                    href="/about-us"
+                                    className="transition-colors hover:text-blue-600 dark:hover:text-yellow-400"
+                                >
+                                    About us
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/blog"
+                                    className="transition-colors hover:text-blue-600 dark:hover:text-yellow-400"
+                                >
+                                    Blog
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/learn"
+                                    className="transition-colors hover:text-blue-600 dark:hover:text-yellow-400"
+                                >
+                                    Learn
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/komunitas"
+                                    className="transition-colors hover:text-blue-600 dark:hover:text-yellow-400"
+                                >
+                                    Komunitas
+                                </Link>
+                            </li>
                         </ul>
                     </div>
 
@@ -101,9 +166,30 @@ export default function Footer() {
                         </h4>
 
                         <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                            <li>Hubungi Kami</li>
-                            <li>Syarat dan Ketentuan</li>
-                            <li>Kebijakan dan Privasi</li>
+                            <li>
+                                <Link
+                                    href="/hubungi-kami"
+                                    className="transition-colors hover:text-blue-600 dark:hover:text-yellow-400"
+                                >
+                                    Hubungi Kami
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/syarat-dan-ketentuan"
+                                    className="transition-colors hover:text-blue-600 dark:hover:text-yellow-400"
+                                >
+                                    Syarat dan Ketentuan
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/kebijakan-dan-privasi"
+                                    className="transition-colors hover:text-blue-600 dark:hover:text-yellow-400"
+                                >
+                                    Kebijakan dan Privasi
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </div>

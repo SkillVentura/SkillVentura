@@ -1448,7 +1448,10 @@ export default function Show({ user, details }: { user: any; details: any }) {
 
                                             {selectedDetail.data.file_path && (
                                                 <a
-                                                    href={`/storage/${selectedDetail.data.file_path}`}
+                                                    href={
+                                                        selectedDetail.data.file_url ||
+                                                        `/student-submissions/${selectedDetail.data.id}/file`
+                                                    }
                                                     target="_blank"
                                                     rel="noreferrer"
                                                     className="group flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2.5 transition-all hover:border-slate-400 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700 dark:hover:bg-slate-800"
@@ -1458,12 +1461,7 @@ export default function Show({ user, details }: { user: any; details: any }) {
                                                             Uploaded File
                                                         </p>
                                                         <p className="mt-0.5 truncate text-[11px] font-medium text-slate-700 dark:text-slate-300">
-                                                            /storage/
-                                                            {
-                                                                selectedDetail
-                                                                    .data
-                                                                    .file_path
-                                                            }
+                                                            Download Submission File
                                                         </p>
                                                     </div>
                                                 </a>

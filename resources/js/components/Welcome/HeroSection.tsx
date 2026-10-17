@@ -1,5 +1,5 @@
 import { login } from '@/routes';
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import {
     ArrowRight,
@@ -15,11 +15,41 @@ import {
     Briefcase,
     Microscope,
     Gamepad2,
+    ExternalLink,
+    HeartHandshake,
+    Plus,
+    Settings,
+    Trash2,
 } from 'lucide-react';
+import type { PublicDonationBanner } from '@/pages/welcome';
 
-export default function HeroSection() {
+export default function HeroSection({
+    donationBanner = null,
+    auth,
+}: {
+    donationBanner?: PublicDonationBanner | null;
+    auth?: { user: any };
+}) {
+    const isAdminOrMentor =
+        auth?.user?.role === 'admin' || auth?.user?.role === 'mentor';
+
+    const handleDeleteBanner = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (
+            confirm(
+                'Apakah Anda yakin ingin menghapus banner donasi dari halaman Home?',
+            )
+        ) {
+            router.delete('/donation-banner', {
+                preserveScroll: true,
+            });
+        }
+    };
+
     return (
-        <section id="home" className="relative overflow-visible pt-32 pb-40">
+        <section id="home" className="relative overflow-visible pt-24 pb-40 md:pt-28">
             {/* GLOBAL GLOW LIGHT / DARK */}
             <div className="absolute right-[-150px] -bottom-[250px] -z-10 h-[600px] w-[600px] rounded-full bg-[#E9E5FF] blur-[180px] transition-all duration-500 md:h-[900px] md:w-[900px] dark:bg-[#3B28F6] dark:opacity-60 dark:blur-[260px]" />
             <div className="absolute -bottom-[200px] left-0 -z-10 h-[500px] w-[500px] rounded-full bg-blue-200 blur-[150px] transition-all duration-500 md:h-[700px] md:w-[700px] dark:bg-blue-700 dark:opacity-40 dark:blur-[220px]" />
@@ -37,7 +67,92 @@ export default function HeroSection() {
             <div className="relative z-10 container mx-auto px-4 md:px-0 lg:px-0 2xl:px-0">
                 <div className="flex flex-col items-center gap-8 lg:flex-row">
                     {/* LEFT TEXT */}
-                    <div className="flex-1 px-6 text-center lg:ml-6 lg:text-left">
+                    <div className="w-full flex-1 px-6 text-center lg:ml-6 lg:text-left">
+                        {/* DONATION / PLATFORM SUPPORT BANNER - TOP LEFT */}
+                        {donationBanner ? (
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.35 }}
+                                className="relative mr-auto mb-4 w-full max-w-[200px] text-left sm:max-w-[225px]"
+                            >
+                                <div className="relative overflow-hidden rounded-lg border border-[#FACC15]/80 bg-[#13174D] shadow-[0_6px_18px_rgba(0,0,0,0.25)] transition-all duration-300 hover:border-[#FACC15] hover:shadow-[0_0_16px_rgba(250,204,21,0.35)]">
+                                    <a
+                                        href={
+                                            donationBanner.url ||
+                                            'https://teer.id/fot98sbqcmggbrot2l0l'
+                                        }
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group block"
+                                    >
+                                        <div className="relative overflow-hidden">
+                                            <img
+                                                src={
+                                                    donationBanner.image_url ||
+                                                    '/images/donation-banner.jpg'
+                                                }
+                                                alt={
+                                                    donationBanner.title ||
+                                                    'Support Platform via Saweria / Trakteer'
+                                                }
+                                                className="h-14 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] sm:h-16"
+                                            />
+                                            <div className="flex items-center justify-between gap-1.5 bg-gradient-to-r from-[#13174D] via-[#1D215D] to-[#13174D] px-2.5 py-1.5 text-white">
+                                                <div className="flex min-w-0 items-center gap-1.5">
+                                                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#FACC15] text-slate-950 shadow">
+                                                        <HeartHandshake className="h-2.5 w-2.5" />
+                                                    </span>
+                                                    <span className="truncate font-['Oxanium'] text-[10px] font-bold tracking-wide sm:text-[11px]">
+                                                        {donationBanner.title ||
+                                                            'Support Trakteer'}
+                                                    </span>
+                                                </div>
+                                                <span className="inline-flex shrink-0 items-center gap-0.5 rounded bg-[#FACC15] px-1.5 py-0.5 font-['Orbitron'] text-[9px] font-extrabold text-slate-950 transition group-hover:bg-yellow-300">
+                                                    Donate
+                                                    <ExternalLink className="h-2.5 w-2.5" />
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    {isAdminOrMentor && (
+                                        <div className="absolute top-1.5 right-1.5 z-20 flex items-center gap-1">
+                                            <Link
+                                                href="/donation-banner"
+                                                title="Edit Banner"
+                                                className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/85 px-2 py-0.5 text-[9px] font-semibold text-white backdrop-blur-md transition hover:bg-[#7C5CFF]"
+                                            >
+                                                <Settings className="h-2.5 w-2.5" />
+                                                Edit
+                                            </Link>
+                                            <button
+                                                type="button"
+                                                onClick={handleDeleteBanner}
+                                                title="Hapus Banner"
+                                                className="inline-flex cursor-pointer items-center gap-0.5 rounded-full border border-rose-400/30 bg-rose-600/90 px-1.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-md transition hover:bg-rose-500"
+                                            >
+                                                <Trash2 className="h-2.5 w-2.5" />
+                                                Hapus
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            </motion.div>
+                        ) : (
+                            isAdminOrMentor && (
+                                <div className="mr-auto mb-4 text-left">
+                                    <Link
+                                        href="/donation-banner"
+                                        className="inline-flex items-center gap-1.5 rounded-lg border border-dashed border-[#7C5CFF]/60 bg-[#7C5CFF]/10 px-3 py-1.5 text-xs font-semibold text-[#7C5CFF] transition hover:bg-[#7C5CFF]/20 dark:border-[#FACC15]/50 dark:bg-[#FACC15]/10 dark:text-[#FACC15]"
+                                    >
+                                        <Plus className="h-3.5 w-3.5" />
+                                        Pasang Banner Donasi
+                                    </Link>
+                                </div>
+                            )
+                        )}
+
                         <motion.h1
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}

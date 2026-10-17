@@ -56,6 +56,7 @@ class UserDetailService
                         'status' => $sub->status,
                         'grade' => $sub->grade,
                         'file_path' => $sub->file_path,
+                        'file_url' => $sub->file_url,
                         'link' => $sub->link,
                         'notes' => $sub->notes,
                         'feedback' => $sub->feedback,

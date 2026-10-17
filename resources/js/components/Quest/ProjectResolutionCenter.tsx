@@ -631,7 +631,7 @@ export default function ProjectResolutionCenter({
                                         className="mt-0.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
                                     />
                                     <span className="text-[11px] leading-relaxed text-slate-700 dark:text-slate-300">
-                                        <strong>Klausul Arbitrase Mengikat:</strong> Saya memahami bahwa pengajuan ini akan membekukan proyek, dan saya menyetujui bahwa putusan Administrator Platform Skillmongo bersifat final, mengikat, dan membebaskan platform dari segala tuntutan hukum perdata/pidana.
+                                        <strong>Klausul Arbitrase Mengikat:</strong> Saya memahami bahwa pengajuan ini akan membekukan proyek, dan saya menyetujui bahwa putusan Administrator Platform SkillVentura bersifat final, mengikat, dan membebaskan platform dari segala tuntutan hukum perdata/pidana.
                                     </span>
                                 </label>
                             </div>

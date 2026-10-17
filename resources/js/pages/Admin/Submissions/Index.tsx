@@ -40,6 +40,7 @@ interface StudentSubmissionItem {
     grade?: number | string | null;
     feedback?: string | null;
     file_path?: string | null;
+    file_url?: string | null;
     link?: string | null;
     notes?: string | null;
     certificate_path?: string | null;
@@ -451,7 +452,10 @@ export default function Index({ submissions, filters, counts }: Props) {
                                                         )}
                                                         {sub.file_path && (
                                                             <a
-                                                                href={`/storage/${sub.file_path}`}
+                                                                href={
+                                                                    sub.file_url ||
+                                                                    `/student-submissions/${sub.slug || sub.id}/file`
+                                                                }
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
                                                                 className="flex items-center gap-1.5 font-bold text-slate-600 hover:underline dark:text-slate-300"
@@ -653,7 +657,10 @@ export default function Index({ submissions, filters, counts }: Props) {
                                                     )}
                                                     {sub.file_path && (
                                                         <a
-                                                            href={`/storage/${sub.file_path}`}
+                                                            href={
+                                                                sub.file_url ||
+                                                                `/student-submissions/${sub.slug || sub.id}/file`
+                                                            }
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-bold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"

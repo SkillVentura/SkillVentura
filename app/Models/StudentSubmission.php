@@ -21,6 +21,7 @@ class StudentSubmission extends Model
         'status',
         'grade',
         'feedback',
+        'certificate_id',
         'certificate_path',
         'graded_by',
     ];
@@ -52,11 +53,32 @@ class StudentSubmission extends Model
             ->firstOrFail();
     }
 
-    protected $appends = ['certificate_url'];
+    protected $appends = ['certificate_url', 'file_url'];
 
-    public function getCertificateUrlAttribute()
+    public function getCertificateIdAttribute($value): ?string
+    {
+        if (! empty($value)) {
+            return strtoupper((string) $value);
+        }
+
+        $docId = (string) ($this->id ?? $this->_id ?? '');
+        if ($this->certificate_path && $docId !== '') {
+            return strtoupper(substr(md5($docId), 0, 12));
+        }
+
+        return null;
+    }
+
+    public function getCertificateUrlAttribute(): ?string
     {
         if ($this->certificate_path) {
+            $certId = $this->certificate_id;
+            $timestamp = $this->updated_at ? $this->updated_at->timestamp : time();
+
+            if ($certId) {
+                return url("/certificates/{$certId}").'?v='.$timestamp;
+            }
+
             if (str_starts_with($this->certificate_path, 'http')) {
                 return $this->certificate_path;
             }
@@ -65,9 +87,24 @@ class StudentSubmission extends Model
             $disk = Storage::disk('s3');
 
             $url = $disk->url($this->certificate_path);
-            $timestamp = $this->updated_at ? $this->updated_at->timestamp : time();
 
             return $url.'?v='.$timestamp;
+        }
+
+        return null;
+    }
+
+    public function getFileUrlAttribute(): ?string
+    {
+        if ($this->file_path) {
+            if (str_starts_with($this->file_path, 'http')) {
+                return $this->file_path;
+            }
+
+            $identifier = $this->slug ?: (string) ($this->id ?? $this->_id ?? '');
+            if ($identifier !== '') {
+                return url("/student-submissions/{$identifier}/file");
+            }
         }
 
         return null;

@@ -40,7 +40,7 @@ class CertificateService
         $pdfData = [
             'studentName' => $studentSubmission->student->name ?? 'Student',
             'assignmentTitle' => $studentSubmission->submission->title ?? 'Course Assignment',
-            'groupName' => $studentSubmission->submission->group->name ?? 'SkillMongo',
+            'groupName' => $studentSubmission->submission->group->name ?? 'SkillVentura',
             'grade' => $studentSubmission->grade ?? 100,
             'date' => now()->format('F j, Y'),
             'mentorName' => $mentor?->name ?? 'Mentor',
@@ -60,6 +60,7 @@ class CertificateService
         ]);
 
         $studentSubmission->update([
+            'certificate_id' => $certificateId,
             'certificate_path' => $filename,
         ]);
         $studentSubmission->touch();

@@ -40,6 +40,7 @@ use App\Http\Controllers\Student\SelectCharacterController;
 use App\Http\Controllers\Student\SelectPathController;
 use App\Http\Controllers\Student\StudentCourseController;
 use App\Http\Controllers\Student\SubmissionController as StudentSubmission;
+use App\Models\DonationBanner;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -579,10 +580,51 @@ Route::middleware(['auth', 'role:student'])->controller(SelectCharacterControlle
 */
 
 Route::get('/', function () {
+    $latestBanner = DonationBanner::latest()->first();
+
+    if ($latestBanner === null) {
+        $donationBannerData = [
+            'title' => 'Support Trakteer',
+            'url' => 'https://teer.id/fot98sbqcmggbrot2l0l',
+            'image_url' => '/images/donation-banner.jpg',
+        ];
+    } elseif ($latestBanner->is_active) {
+        $donationBannerData = [
+            'title' => $latestBanner->title ?: 'Support Trakteer',
+            'url' => $latestBanner->url ?: 'https://teer.id/fot98sbqcmggbrot2l0l',
+            'image_url' => $latestBanner->image_url ?? '/images/donation-banner.jpg',
+        ];
+    } else {
+        $donationBannerData = null;
+    }
+
     return Inertia::render('welcome', [
         'canRegister' => Features::enabled(Features::registration()),
+        'donationBanner' => $donationBannerData,
     ]);
 })->name('home');
+
+Route::get('/about-us', function () {
+    return Inertia::render('AboutUs');
+})->name('about-us');
+
+Route::get('/{slug}', function (string $slug) {
+    return Inertia::render('FooterPage', [
+        'slug' => $slug,
+    ]);
+})->whereIn('slug', [
+    'online-course',
+    'bootcamp',
+    'learn-gaming',
+    'corporate-training',
+    'partnership',
+    'blog',
+    'learn',
+    'komunitas',
+    'hubungi-kami',
+    'syarat-dan-ketentuan',
+    'kebijakan-dan-privasi',
+])->name('footer.page');
 
 /*
 |--------------------------------------------------------------------------
@@ -599,6 +641,10 @@ Route::get('/auth/google/callback', [SocialController::class, 'callback']);
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth'])->group(function () {
+    Route::get('/certificates/{certificateId}', [CertificateController::class, 'show'])->name('certificates.show');
+    Route::get('/submissions/{submission}/attachment', [StudentSubmission::class, 'downloadAttachment'])->name('submissions.attachment');
+    Route::get('/student-submissions/{studentSubmission}/file', [StudentSubmission::class, 'downloadFile'])->name('student-submissions.file');
+
     Route::get('/quests/{quest}/chat-unread-status', [QuestMessageController::class, 'getUnreadStatus'])->name('quests.chat.unread_status');
     Route::get('/quests/bids/{bid}/messages', [QuestMessageController::class, 'getMessages'])->name('quests.bids.messages');
     Route::post('/quests/bids/{bid}/messages', [QuestMessageController::class, 'store'])->name('quests.bids.messages.store');

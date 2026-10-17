@@ -1,3 +1,5 @@
+import { Link } from '@inertiajs/react';
+
 export default function Footer() {
     return (
         <footer className="border-t border-gray-200 py-16 dark:border-white/10">
@@ -14,8 +16,22 @@ export default function Footer() {
                     <h4 className="mb-3 font-semibold">Program</h4>
 
                     <ul className="space-y-2 text-sm">
-                        <li>Online Course</li>
-                        <li>Bootcamp</li>
+                        <li>
+                            <Link
+                                href="/online-course"
+                                className="hover:underline"
+                            >
+                                Online Course
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/bootcamp"
+                                className="hover:underline"
+                            >
+                                Bootcamp
+                            </Link>
+                        </li>
                     </ul>
                 </div>
 
@@ -23,8 +39,19 @@ export default function Footer() {
                     <h4 className="mb-3 font-semibold">Company</h4>
 
                     <ul className="space-y-2 text-sm">
-                        <li>About</li>
-                        <li>Blog</li>
+                        <li>
+                            <Link href="/about-us" className="hover:underline">
+                                About
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/blog"
+                                className="hover:underline"
+                            >
+                                Blog
+                            </Link>
+                        </li>
                     </ul>
                 </div>
 
@@ -32,8 +59,22 @@ export default function Footer() {
                     <h4 className="mb-3 font-semibold">Support</h4>
 
                     <ul className="space-y-2 text-sm">
-                        <li>Contact</li>
-                        <li>Privacy</li>
+                        <li>
+                            <Link
+                                href="/hubungi-kami"
+                                className="hover:underline"
+                            >
+                                Contact
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/kebijakan-dan-privasi"
+                                className="hover:underline"
+                            >
+                                Privacy
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </div>

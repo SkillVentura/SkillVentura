@@ -794,7 +794,7 @@ export default function AdminArbitrationTabPanel({
                                         Akta Ketetapan Resmi Arbitrase (Inkracht)
                                     </h4>
                                     <span className="text-[10px] text-slate-500 dark:text-slate-400">
-                                        Diputuskan pada {formatDate(dispute.award?.ruled_at ?? dispute.ruled_at)} oleh {dispute.award?.arbiter_name ?? 'Dewan Arbitrase Skillmongo'}
+                                        Diputuskan pada {formatDate(dispute.award?.ruled_at ?? dispute.ruled_at)} oleh {dispute.award?.arbiter_name ?? 'Dewan Arbitrase SkillVentura'}
                                     </span>
                                 </div>
                             </div>
@@ -825,7 +825,7 @@ export default function AdminArbitrationTabPanel({
                             </span>
                             <p className="text-xs text-slate-800 dark:text-slate-200 leading-relaxed italic">
                                 "{dispute.award?.ratio_decidendi ??
-                                    'Menimbang integritas penyelesaian deliverable dan kepatuhan kewajiban finansial bilateral P2P (Non-Escrow) platform Skillmongo.'}"
+                                    'Menimbang integritas penyelesaian deliverable dan kepatuhan kewajiban finansial bilateral P2P (Non-Escrow) platform SkillVentura.'}"
                             </p>
                         </div>
 

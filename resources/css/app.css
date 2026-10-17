@@ -310,6 +310,44 @@ html {
     scrollbar-color: rgba(148, 163, 184, 0.2) transparent;
 }
 
+/* Sleek Gamified Sidebar Scrollbar */
+.sidebar-scrollbar {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(124, 92, 255, 0.35) transparent;
+}
+.sidebar-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 0px;
+}
+.sidebar-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 9999px;
+    margin-block: 8px;
+}
+.sidebar-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(124, 92, 255, 0.35), rgba(56, 189, 248, 0.25));
+    border-radius: 9999px;
+    border: 1px solid rgba(124, 92, 255, 0.2);
+    transition: all 0.3s ease;
+}
+.sidebar-scrollbar:hover::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(124, 92, 255, 0.75), rgba(56, 189, 248, 0.6));
+    box-shadow: 0 0 8px rgba(124, 92, 255, 0.45);
+}
+.sidebar-scrollbar::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(180deg, #7C5CFF, #38BDF8);
+}
+.sidebar-scroll-mask {
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 14px,
+        black calc(100% - 14px),
+        transparent 100%
+    );
+}
+
 /* ============================================================================
    SM BREAKPOINT EXCLUSIVE COMPACT OVERRIDES (640px <= width <= 767px)
    MD (768px-1023px) uses standard 50:50 desktop layout identical to XL!

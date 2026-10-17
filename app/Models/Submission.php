@@ -22,6 +22,24 @@ class Submission extends Model
 
     protected $casts = [];
 
+    protected $appends = ['attachment_url'];
+
+    public function getAttachmentUrlAttribute(): ?string
+    {
+        if ($this->attachment) {
+            if (str_starts_with($this->attachment, 'http')) {
+                return $this->attachment;
+            }
+
+            $identifier = $this->slug ?: (string) ($this->id ?? $this->_id ?? '');
+            if ($identifier !== '') {
+                return url("/submissions/{$identifier}/attachment");
+            }
+        }
+
+        return null;
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';

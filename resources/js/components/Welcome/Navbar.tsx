@@ -42,7 +42,7 @@ export default function Navbar({
     return (
         <header className="fixed top-0 right-0 left-0 z-50">
             <motion.nav className="flex w-full items-center justify-between border-b bg-white px-4 py-2 shadow-sm md:px-1 md:py-1 lg:px-8 lg:py-2 dark:bg-[#04062d]">
-                <div className="flex items-center gap-[-10px]">
+                <Link href="/" className="flex items-center gap-[-10px]">
                     {/* Use existing logo logic or fallback to icon */}
                     <div className="flex items-center justify-center rounded-lg text-white">
                         {/* <Gem size={24} /> */}
@@ -52,17 +52,11 @@ export default function Navbar({
                             className="h-16 w-auto object-contain md:h-16 lg:h-18 xl:h-19"
                         />
                     </div>
-                    {/* <span
-                        style={{ fontFamily: 'Orbitron' }}
-                        className="mt-2 hidden text-lg font-bold tracking-tight text-slate-900 sm:block md:mt-2 md:text-xs lg:mt-3 lg:text-lg dark:text-slate-100 dark:hover:text-[#FACC15]"
-                    >
-                        SKILL VENTURA
-                    </span> */}
-                </div>
+                </Link>
 
                 <div className="mt-2 hidden items-center gap-6 text-lg font-black tracking-wide drop-shadow-sm md:mt-2 md:flex md:gap-6 md:text-xl lg:mt-3 lg:gap-10 lg:text-2xl">
                     <a
-                        href="#"
+                        href="/#"
                         onClick={() => setActiveSection('home')}
                         className={`transition-all duration-300 ${
                             activeSection === 'home'
@@ -75,7 +69,7 @@ export default function Navbar({
                     </a>
 
                     <a
-                        href="#about"
+                        href="/#about"
                         onClick={() => setActiveSection('about')}
                         className={`transition-all duration-300 ${
                             activeSection === 'about'
@@ -88,7 +82,7 @@ export default function Navbar({
                     </a>
 
                     <a
-                        href="#learn"
+                        href="/#learn"
                         onClick={() => setActiveSection('learn')}
                         className={`transition-all duration-300 ${
                             activeSection === 'learn'
@@ -101,7 +95,7 @@ export default function Navbar({
                     </a>
 
                     <a
-                        href="#contact"
+                        href="/#contact"
                         onClick={() => setActiveSection('contact')}
                         className={`transition-all duration-300 ${
                             activeSection === 'contact'
@@ -186,10 +180,10 @@ export default function Navbar({
                     >
                         {/* MENU ITEMS */}
                         {[
-                            { name: 'HOME', href: '#' },
-                            { name: 'ABOUT', href: '#about' },
-                            { name: 'LEARN', href: '#learn' },
-                            { name: 'CONTACT', href: '#contact' },
+                            { name: 'HOME', href: '/#' },
+                            { name: 'ABOUT', href: '/#about' },
+                            { name: 'LEARN', href: '/#learn' },
+                            { name: 'CONTACT', href: '/#contact' },
                         ].map((item, i) => (
                             <motion.a
                                 key={item.name}

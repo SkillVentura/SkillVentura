@@ -30,6 +30,7 @@ interface Submission {
     description: string;
     submission_type: string;
     attachment?: string;
+    attachment_url?: string;
     created_at: string;
 }
 
@@ -409,7 +410,10 @@ export default function Index({
                                         {submission.attachment && (
                                             <div className="mb-4">
                                                 <a
-                                                    href={`/storage/${submission.attachment}`}
+                                                    href={
+                                                        submission.attachment_url ||
+                                                        `/submissions/${targetSlug}/attachment`
+                                                    }
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-blue-50/70 px-3 py-1.5 text-xs font-bold text-blue-700 transition-colors hover:bg-blue-100 dark:border-blue-500/30 dark:bg-blue-500/15 dark:text-blue-300"

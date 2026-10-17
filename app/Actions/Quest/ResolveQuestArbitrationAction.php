@@ -52,7 +52,7 @@ class ResolveQuestArbitrationAction
         $dispute['ruled_at'] = now()->toIso8601String();
         $awardNumber = 'ARB-'.date('Ymd').'-'.strtoupper(Str::random(6));
         $dispute['memo_number'] = $dispute['memo_number'] ?? $awardNumber;
-        $dispute['legal_disclaimer'] = 'Putusan arbitrase ini diterbitkan secara sah oleh Administrator Platform Skillmongo sebagai putusan final dan mengikat sesuai kesepakatan para pihak.';
+        $dispute['legal_disclaimer'] = 'Putusan arbitrase ini diterbitkan secara sah oleh Administrator Platform SkillVentura sebagai putusan final dan mengikat sesuai kesepakatan para pihak.';
 
         if ($sanctionData && ! empty($sanctionData['sanction_type']) && $sanctionData['sanction_type'] !== 'none') {
             $targetUserId = ($sanctionData['sanction_target'] ?? 'worker') === 'worker' ? $quest->worker_id : $quest->creator_id;
@@ -136,11 +136,11 @@ class ResolveQuestArbitrationAction
         $dispute['award'] = [
             'award_number' => $awardNumber,
             'ruled_at' => now()->toIso8601String(),
-            'arbiter_name' => 'Dewan Arbitrase Skillmongo',
+            'arbiter_name' => 'Dewan Arbitrase SkillVentura',
             'ruling_type' => $ruling,
             'split_percentage' => $splitPercentage ? (int) $splitPercentage : null,
             'findings_of_fact' => $findingsOfFact ?: ($note ?: 'Berdasarkan pemeriksaan dokumen bukti, riwayat komunikasi, dan pembuktian kontrak para pihak.'),
-            'ratio_decidendi' => $ratioDecidendi ?: 'Menimbang ketentuan kontrak kerja P2P dan standar kepatuhan eksekusi hasil pekerjaan platform Skillmongo.',
+            'ratio_decidendi' => $ratioDecidendi ?: 'Menimbang ketentuan kontrak kerja P2P dan standar kepatuhan eksekusi hasil pekerjaan platform SkillVentura.',
             'financial_order' => $financialOrder,
             'platform_reward_order' => [
                 'gold_creator' => 0,
@@ -165,7 +165,7 @@ class ResolveQuestArbitrationAction
                 'status' => 'verified',
                 'audit_note' => 'Tidak diperlukan transfer P2P tambahan berdasarkan amar putusan.',
                 'verified_at' => now()->toIso8601String(),
-                'verified_by' => 'Sistem Arbitrase Skillmongo',
+                'verified_by' => 'Sistem Arbitrase SkillVentura',
             ];
         }
 

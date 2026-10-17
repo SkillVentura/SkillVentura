@@ -353,7 +353,7 @@ export default function Dashboard({
                                     </span>
                                 </div>
                                 <h1 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl dark:text-white">
-                                    Skillmongo Overview
+                                    SkillVentura Overview
                                 </h1>
                                 <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                                     Selamat datang kembali,{' '}

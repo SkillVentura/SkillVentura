@@ -26,7 +26,7 @@ class SubmissionController extends Controller
 
         if ($request->hasFile('attachment')) {
             $data['attachment'] = $request->file('attachment')
-                ->store("submissions/{$group->id}/attachments");
+                ->store("submissions/{$group->id}/attachments", 's3');
         }
 
         $action->execute(
@@ -110,7 +110,7 @@ class SubmissionController extends Controller
 
         if ($request->hasFile('attachment')) {
             $data['attachment'] = $request->file('attachment')
-                ->store("submissions/{$submission->group_id}/attachments");
+                ->store("submissions/{$submission->group_id}/attachments", 's3');
         }
 
         $submission->update($data);

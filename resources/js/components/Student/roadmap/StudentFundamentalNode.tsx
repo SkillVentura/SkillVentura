@@ -60,7 +60,11 @@ export default function StudentFundamentalNode({
                     >
                         {thumbnail ? (
                             <img
-                                src={`/storage/${thumbnail}`}
+                                src={
+                                    thumbnail.startsWith('http') || thumbnail.startsWith('/')
+                                        ? thumbnail
+                                        : `/storage/${thumbnail}`
+                                }
                                 className="h-full w-full object-cover"
                                 alt="thumbnail"
                             />

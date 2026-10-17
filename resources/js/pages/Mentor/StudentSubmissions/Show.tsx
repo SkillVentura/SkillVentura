@@ -39,6 +39,7 @@ interface StudentSubmission {
     slug?: string;
     submission_id: string;
     file_path?: string;
+    file_url?: string;
     link?: string;
     notes?: string;
     status: string;
@@ -222,7 +223,10 @@ export default function Show({ studentSubmission }: Props) {
                                                 </label>
                                             </div>
                                             <a
-                                                href={`/storage/${studentSubmission.file_path}`}
+                                                href={
+                                                    studentSubmission.file_url ||
+                                                    `/student-submissions/${studentSubmission.slug || studentSubmission.id}/file`
+                                                }
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="group dark:hover:bg-slate-850 flex items-center justify-between rounded-xl border border-slate-200 bg-white p-3.5 shadow-sm transition-all hover:border-blue-300 hover:bg-blue-50/50 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700"
