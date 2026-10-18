@@ -182,8 +182,8 @@ class UserDetailService
 
         /** @var FilesystemAdapter $disk */
         $disk = Storage::disk('s3');
-        $signatureUrl = $user->signature_path && $disk->exists($user->signature_path)
-            ? $disk->temporaryUrl($user->signature_path, now()->addMinutes(30))
+        $signatureUrl = $user->signature_path
+            ? $disk->url($user->signature_path)
             : null;
 
         $careerGroups = $user->mentorCareerGroups->map(function ($mcg) {

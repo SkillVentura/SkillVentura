@@ -241,14 +241,14 @@ class QuestService
         $resolvedImages = array_map(function ($img) use ($disk) {
             return [
                 'name' => $img['name'] ?? 'image.jpg',
-                'url' => isset($img['path']) ? $disk->temporaryUrl($img['path'], now()->addMinutes(60)) : '',
+                'url' => isset($img['path']) ? $disk->url($img['path']) : '',
             ];
         }, $quest->images ?? []);
 
         $resolvedFiles = array_map(function ($file) use ($disk) {
             return [
                 'name' => $file['name'] ?? 'file.dat',
-                'url' => isset($file['path']) ? $disk->temporaryUrl($file['path'], now()->addMinutes(60)) : '',
+                'url' => isset($file['path']) ? $disk->url($file['path']) : '',
                 'size' => $file['size'] ?? 0,
             ];
         }, $quest->files ?? []);
@@ -257,7 +257,7 @@ class QuestService
         if ($quest->submission_file && isset($quest->submission_file['path'])) {
             $resolvedSubmissionFile = [
                 'name' => $quest->submission_file['name'] ?? 'deliverable.zip',
-                'url' => $disk->temporaryUrl($quest->submission_file['path'], now()->addMinutes(60)),
+                'url' => $disk->url($quest->submission_file['path']),
                 'size' => $quest->submission_file['size'] ?? 0,
             ];
         }
@@ -266,7 +266,7 @@ class QuestService
         if ($quest->payment_proof && isset($quest->payment_proof['path'])) {
             $resolvedPaymentProof = [
                 'name' => $quest->payment_proof['name'] ?? 'receipt.png',
-                'url' => $disk->temporaryUrl($quest->payment_proof['path'], now()->addMinutes(60)),
+                'url' => $disk->url($quest->payment_proof['path']),
                 'size' => $quest->payment_proof['size'] ?? 0,
             ];
         }
@@ -275,7 +275,7 @@ class QuestService
         if ($quest->dp_proof && isset($quest->dp_proof['path'])) {
             $resolvedDpProof = [
                 'name' => $quest->dp_proof['name'] ?? 'dp_receipt.png',
-                'url' => $disk->temporaryUrl($quest->dp_proof['path'], now()->addMinutes(60)),
+                'url' => $disk->url($quest->dp_proof['path']),
                 'size' => $quest->dp_proof['size'] ?? 0,
             ];
         }
@@ -288,7 +288,7 @@ class QuestService
                 'submission_note' => $sub['submission_note'] ?? null,
                 'submission_file' => isset($sub['submission_file']['path']) ? [
                     'name' => $sub['submission_file']['name'] ?? 'deliverable.zip',
-                    'url' => $disk->temporaryUrl($sub['submission_file']['path'], now()->addMinutes(60)),
+                    'url' => $disk->url($sub['submission_file']['path']),
                     'size' => $sub['submission_file']['size'] ?? 0,
                 ] : null,
             ];
@@ -764,7 +764,7 @@ class QuestService
                 $submissionFile = [
                     'name' => $subFile['name'] ?? 'project.zip',
                     'size' => $subFile['size'] ?? 0,
-                    'url' => isset($subFile['path']) ? $disk->temporaryUrl($subFile['path'], now()->addMinutes(30)) : null,
+                    'url' => isset($subFile['path']) ? $disk->url($subFile['path']) : null,
                 ];
             }
 

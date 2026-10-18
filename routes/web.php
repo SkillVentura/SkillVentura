@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\QuizController;
 use App\Http\Controllers\Admin\RankController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\SocialController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\Mentor\DashboardController as MentorDashboard;
 use App\Http\Controllers\Mentor\DetailController as MentorDetailController;
 use App\Http\Controllers\Mentor\MentorModuleManagementController;
@@ -650,6 +651,10 @@ Route::middleware(['auth'])->group(function () {
 
 require __DIR__.'/settings.php';
 
+Route::get('/media/{path}', [MediaController::class, 'show'])
+    ->where('path', '.*')
+    ->name('media.show');
+
 Route::get('/{slug}', [FooterController::class, 'showPublicPage'])
-    ->where('slug', '^(?!(?:login|register|logout|forgot-password|reset-password|two-factor-challenge|user|email|settings|signature|donation-banner|admin|mentor|dashboard|course|courses|modules|paths|quiz|select-career|leaderboard|career-groups|submissions|quests|notifications|forum|select-character|certificates|mentors|profile|auth|up|storage|sanctum|api)$)[a-z0-9-]+$')
+    ->where('slug', '^(?!(?:login|register|logout|forgot-password|reset-password|two-factor-challenge|user|email|settings|signature|donation-banner|admin|mentor|dashboard|course|courses|modules|paths|quiz|select-career|leaderboard|career-groups|submissions|quests|notifications|forum|select-character|certificates|mentors|profile|auth|up|storage|media|sanctum|api)$)[a-z0-9-]+$')
     ->name('footer.page');

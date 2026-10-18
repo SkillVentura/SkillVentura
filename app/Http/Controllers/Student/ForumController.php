@@ -523,6 +523,16 @@ class ForumController extends Controller
             abort(403, 'Akses ditolak.');
         }
 
+        if (preg_match('#(?:^|/)(forum_attachments/[^?\#]+)#', (string) $url, $matches)) {
+            $s3Path = ltrim($matches[1], '/');
+            /** @var FilesystemAdapter $disk */
+            $disk = Storage::disk('s3');
+
+            if ($disk->exists($s3Path)) {
+                return $disk->download($s3Path, basename($s3Path));
+            }
+        }
+
         try {
             $filename = basename(parse_url($url, PHP_URL_PATH)) ?: 'lampiran';
 

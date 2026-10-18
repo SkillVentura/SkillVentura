@@ -121,7 +121,7 @@ class QuestMessageController extends Controller
                 ],
                 'file' => $msg->file && isset($msg->file['path']) ? [
                     'name' => $msg->file['name'] ?? 'attachment.dat',
-                    'url' => $disk->temporaryUrl($msg->file['path'], now()->addMinutes(60)),
+                    'url' => $disk->url($msg->file['path']),
                     'size' => $msg->file['size'] ?? 0,
                 ] : null,
             ];
@@ -214,7 +214,7 @@ class QuestMessageController extends Controller
             ],
             'file' => $msg->file && isset($msg->file['path']) ? [
                 'name' => $msg->file['name'] ?? 'attachment.dat',
-                'url' => $disk->temporaryUrl($msg->file['path'], now()->addMinutes(60)),
+                'url' => $disk->url($msg->file['path']),
                 'size' => $msg->file['size'] ?? 0,
             ] : null,
         ]);

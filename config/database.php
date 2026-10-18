@@ -122,8 +122,10 @@ return [
 
         'mongodb' => [
             'driver' => 'mongodb',
-            'dsn' => env('MONGODB_URI'),
-            'database' => env('MONGODB_DATABASE'),
+            'dsn' => env('MONGODB_URI')
+                ? preg_replace('#(?<!:)/{2,}#', '/', trim((string) env('MONGODB_URI'), " \t\n\r\0\x0B\"'"))
+                : 'mongodb://127.0.0.1:27017',
+            'database' => trim((string) env('MONGODB_DATABASE', 'lms_gam_rpg'), " \t\n\r\0\x0B/\"'"),
         ],
 
     ],
