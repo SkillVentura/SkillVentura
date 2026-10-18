@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Quest;
+use App\Services\FooterService;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -49,6 +50,8 @@ class HandleInertiaRequests extends Middleware
             'pendingCounts' => fn () => $request->user()?->isAdmin() ? [
                 'quests' => Quest::whereIn('status', ['draft', 'pending_approval'])->count(),
             ] : [],
+
+            'footer' => fn () => app(FooterService::class)->getPublicFooterData(),
 
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),

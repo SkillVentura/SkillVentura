@@ -39,9 +39,15 @@
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="icon" href="/images/logo-sv.png" type="image/png">
-    <link rel="shortcut icon" href="/images/logo-sv.png" type="image/png">
-    <link rel="apple-touch-icon" href="/images/logo-sv.png">
+    @php
+        $dynamicLogoUrl = data_get($page ?? [], 'props.footer.logo_url');
+        $faviconUrl = ($dynamicLogoUrl && $dynamicLogoUrl !== '/images/logo.webp')
+            ? $dynamicLogoUrl
+            : '/images/logo-sv.png?v=2';
+    @endphp
+    <link rel="icon" href="{{ $faviconUrl }}" type="image/png">
+    <link rel="shortcut icon" href="{{ $faviconUrl }}" type="image/png">
+    <link rel="apple-touch-icon" href="{{ $faviconUrl }}">
     <link rel="preload" href="/images/logo-fast.webp" as="image" type="image/webp">
 
     <link rel="preconnect" href="https://fonts.bunny.net">

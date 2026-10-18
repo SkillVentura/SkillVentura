@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CharacterController;
 use App\Http\Controllers\Admin\CourseBuilderController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\Admin\LevelBadgeController;
 use App\Http\Controllers\Admin\ModuleManagementController;
 use App\Http\Controllers\Admin\QuizController;
@@ -251,6 +252,20 @@ Route::middleware(['auth', 'role:admin,mentor'])
 
         /* ---------------- STUDENT SUBMISSIONS MONITORING ---------------- */
         Route::get('/submissions', [App\Http\Controllers\Admin\SubmissionController::class, 'index'])->name('submissions.index');
+    });
+
+Route::middleware(['auth', 'role:admin'])
+    ->prefix('admin/footer')
+    ->name('admin.footer.')
+    ->group(function () {
+        Route::get('/', [FooterController::class, 'index'])->name('index');
+        Route::post('/settings', [FooterController::class, 'updateSettings'])->name('settings.update');
+        Route::post('/socials', [FooterController::class, 'updateSocialLinks'])->name('socials.update');
+        Route::post('/items', [FooterController::class, 'storeItem'])->name('items.store');
+        Route::post('/items/reorder', [FooterController::class, 'reorderItems'])->name('items.reorder');
+        Route::match(['put', 'post'], '/items/{id}', [FooterController::class, 'updateItem'])->name('items.update');
+        Route::post('/items/{id}/toggle', [FooterController::class, 'toggleItem'])->name('items.toggle');
+        Route::delete('/items/{id}', [FooterController::class, 'destroyItem'])->name('items.destroy');
     });
 /*
 |--------------------------------------------------------------------------
@@ -604,27 +619,9 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('/about-us', function () {
-    return Inertia::render('AboutUs');
-})->name('about-us');
-
-Route::get('/{slug}', function (string $slug) {
-    return Inertia::render('FooterPage', [
-        'slug' => $slug,
-    ]);
-})->whereIn('slug', [
-    'online-course',
-    'bootcamp',
-    'learn-gaming',
-    'corporate-training',
-    'partnership',
-    'blog',
-    'learn',
-    'komunitas',
-    'hubungi-kami',
-    'syarat-dan-ketentuan',
-    'kebijakan-dan-privasi',
-])->name('footer.page');
+Route::get('/about-us', [FooterController::class, 'showPublicPage'])
+    ->defaults('slug', 'about-us')
+    ->name('about-us');
 
 /*
 |--------------------------------------------------------------------------
@@ -652,3 +649,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/settings.php';
+
+Route::get('/{slug}', [FooterController::class, 'showPublicPage'])
+    ->where('slug', '^(?!(?:login|register|logout|forgot-password|reset-password|two-factor-challenge|user|email|settings|signature|donation-banner|admin|mentor|dashboard|course|courses|modules|paths|quiz|select-career|leaderboard|career-groups|submissions|quests|notifications|forum|select-character|certificates|mentors|profile|auth|up|storage|sanctum|api)$)[a-z0-9-]+$')
+    ->name('footer.page');

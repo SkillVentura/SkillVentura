@@ -17,6 +17,7 @@ import {
     MessageSquare,
     Briefcase,
     HeartHandshake,
+    PanelBottom,
     X,
 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -128,6 +129,13 @@ const menu: MenuItem[] = [
         icon: HeartHandshake,
         href: '/donation-banner',
         roles: ['admin', 'mentor'],
+        section: 'platform',
+    },
+    {
+        name: 'Kelola Footer',
+        icon: PanelBottom,
+        href: '/admin/footer',
+        roles: ['admin'],
         section: 'platform',
     },
 ];
